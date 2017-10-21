@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AnalyzerActivity"></activity>
+        <activity android:name=".TextAnalyzerUtil"></activity>
     </application>
 
 </manifest>

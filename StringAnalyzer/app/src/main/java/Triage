@@ -1,0 +1,35 @@
+BUG #1 / Critical / Nexus 5X / Version 8.0
+DESCRIPTION: App crashes when you hit submit
+REPRODUCTION STEPS: On the main activity, once the submit button is clicked, with or without text added in the TextEntry field
+                    android.content.ActivityNotFoundException:
+ERROR FOUND IN MONITOR: "Unable to find explicit activity class {co.miniforge.corey.stringanalyzer/co.miniforge.corey.stringanalyzer.
+                         TextAnalyzerUtil}; have you declared this activity in your AndroidManifest.xml?"
+LOCATION IN CODE: InputActivity.java around line 32 when the on click listener
+          is set, as the button is clicked it attempts to call a function
+          from the TextAnalyzerUtil.java class which has not been added to
+          the AndroidManifest.xml. The most likely reason for this is that
+          the class was just added in without it realizing to change the xml
+          to  be able to use the class. (round 2) Also the constrtucting call for the
+          TextAnalyzerUtil was not being passed a string for the constructor
+          so the new intent line had to change.
+SOLUTION: Change the AndroidManifest.xml by adding an activity for TextAnalyzerUtil.
+      (round 2) Change the new intent line to move to AnalyzerActivity instead of the TextAnalyzerUtil.
+IMPACT: Now noticed that the play again button does not work
+
+BUG #1 / Critical / Nexus 5X / Version 8.0
+DESCRIPTION: App crashes when you hit submit
+REPRODUCTION STEPS: On the main activity, once the submit button is clicked, with or without text added in the TextEntry field
+                    android.content.ActivityNotFoundException:
+ERROR FOUND IN MONITOR: "Unable to find explicit activity class {co.miniforge.corey.stringanalyzer/co.miniforge.corey.stringanalyzer.
+                         TextAnalyzerUtil}; have you declared this activity in your AndroidManifest.xml?"
+LOCATION IN CODE: InputActivity.java around line 32 when the on click listener
+          is set, as the button is clicked it attempts to call a function
+          from the TextAnalyzerUtil.java class which has not been added to
+          the AndroidManifest.xml. The most likely reason for this is that
+          the class was just added in without it realizing to change the xml
+          to  be able to use the class. (round 2) Also the constrtucting call for the
+          TextAnalyzerUtil was not being passed a string for the constructor
+          so the new intent line had to change.
+SOLUTION: Change the AndroidManifest.xml by adding an activity for TextAnalyzerUtil.
+      (round 2) Change the new intent line to move to AnalyzerActivity instead of the TextAnalyzerUtil.
+IMPACT: Now noticed that the play again button does not work

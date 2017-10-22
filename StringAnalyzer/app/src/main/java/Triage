@@ -15,21 +15,39 @@ LOCATION IN CODE: InputActivity.java around line 32 when the on click listener
 SOLUTION: Change the AndroidManifest.xml by adding an activity for TextAnalyzerUtil.
       (round 2) Change the new intent line to move to AnalyzerActivity instead of the TextAnalyzerUtil.
 IMPACT: Now noticed that the play again button does not work
+10/21 4:42 : https://github.com/OstrichCaleb/Assignment03_StringAnalyzer/commit/cdc77f3c0d76fec33b7866d848dd3dc18971fb8f
 
-BUG #1 / Critical / Nexus 5X / Version 8.0
-DESCRIPTION: App crashes when you hit submit
-REPRODUCTION STEPS: On the main activity, once the submit button is clicked, with or without text added in the TextEntry field
-                    android.content.ActivityNotFoundException:
-ERROR FOUND IN MONITOR: "Unable to find explicit activity class {co.miniforge.corey.stringanalyzer/co.miniforge.corey.stringanalyzer.
-                         TextAnalyzerUtil}; have you declared this activity in your AndroidManifest.xml?"
-LOCATION IN CODE: InputActivity.java around line 32 when the on click listener
-          is set, as the button is clicked it attempts to call a function
-          from the TextAnalyzerUtil.java class which has not been added to
-          the AndroidManifest.xml. The most likely reason for this is that
-          the class was just added in without it realizing to change the xml
-          to  be able to use the class. (round 2) Also the constrtucting call for the
-          TextAnalyzerUtil was not being passed a string for the constructor
-          so the new intent line had to change.
-SOLUTION: Change the AndroidManifest.xml by adding an activity for TextAnalyzerUtil.
-      (round 2) Change the new intent line to move to AnalyzerActivity instead of the TextAnalyzerUtil.
-IMPACT: Now noticed that the play again button does not work
+BUG #2 / Normal / Nexus 5X / Version 8.0
+DESCRIPTION: Analyze another string button doesn’t take you back to the first screen
+REPRODUCTION STEPS: After getting stats about my string, the button that allows you to enter a new string
+                    does not function correctily and bring you back an activity
+ERROR FOUND IN MONITOR: Unable to find explicit activity class {co.miniforge.corey.stringanalyzer/co.miniforge.corey
+                        .stringanalyzer.TextAnalyzerUtil}; have you declared this activity in your AndroidManifest.xml?"
+LOCATION IN CODE:   There was no on click listener looking for the button to be pushed, after adding one
+                    I was able to send to a new activity using intents, directing me back to the home
+                    page.
+SOLUTION:   Added a new on click listener that waited for the button to be pushed, and when it was it would
+            create a new intent allowing it to switch to the main activity again.
+IMPACT: The game was fully functional for being able to play again
+10/21 4:45 : https://github.com/OstrichCaleb/Assignment03_StringAnalyzer/commit/7f2eb8f56e540b3078481c8755496b820019b7c0
+
+BUG #3 / Normal / Nexus 5X / Version 8.0
+DESCRIPTION: Some of the metrics are not updating with new data
+REPRODUCTION STEPS: After entering a string, the fields that displayed unique words and longest words did
+                    not show the correct data.
+ERROR FOUND IN MONITOR: There was no error, it just didn't display the correct info
+LOCATION IN CODE:   There was no setText for the TextViews that were supposed to display the information.
+SOLUTION:   Added a setText for the information that called the methods that were in the TextAnalyzerUtil
+            class that returned a string for one and an int for the other
+IMPACT: All the correct information was showed for the word
+10/21 5:11 : https://github.com/OstrichCaleb/Assignment03_StringAnalyzer/commit/e0cd2e79494e727921577c57d8fb917a35357438
+
+BUG #4 / Low / Nexus 5X / Version 8.0
+DESCRIPTION: You can submit an empty message
+REPRODUCTION STEPS: I entered nothing and it went anyway
+ERROR FOUND IN MONITOR: There was no check to see if the EditText had something before switching intents
+LOCATION IN CODE:   Above where you go and create the intent there was no check for the entry
+SOLUTION:   Added a check to see if the text entry was empty or not, and if it was not it didn't
+            do anything until the button was clicked again
+IMPACT: You could no longer go to the results screen without entering a word
+10/21 4:50 : https://github.com/OstrichCaleb/Assignment03_StringAnalyzer/commit/844d0a8087d231c754666104730a3449a383ca2d
